@@ -1,4 +1,4 @@
-import {getId, getCommentId, getPhotoId, getRandomArrayElement} from "./utils";
+import {getId, getCommentId, getPhotoId, getRandomArrayElement, getRandomNumber} from './utils';
 
 const DESCRIPTIONS = [
   'Sunset on the beach',
@@ -44,6 +44,6 @@ const createDescription = () => ({
   comments: Array.from({length: 6}, createComment),
 });
 
-const photoDescriptions = Array.from({length: OBJECT_COUNT}, createDescription);
+const photoDescriptions = () => Array.from({length: OBJECT_COUNT}, createDescription);
 
 export {photoDescriptions};

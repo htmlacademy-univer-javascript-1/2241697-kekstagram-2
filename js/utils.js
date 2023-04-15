@@ -22,4 +22,4 @@ const getCommentId = getUniqueId(1, 1000);
 const getPhotoId = getUniqueId(1, 25);
 const getRandomArrayElement = (elements) => elements[getRandomNumber(0, elements.length - 1)];
 
-export {getId, getCommentId, getPhotoId, getRandomArrayElement};
+export {getId, getCommentId, getPhotoId, getRandomArrayElement, getRandomNumber};
