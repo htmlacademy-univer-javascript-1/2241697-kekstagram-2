@@ -1,4 +1,4 @@
-import {getId, getCommentId, getPhotoId, getRandomArrayElement, getRandomNumber} from './utils';
+import {getId, getCommentId, getPhotoId, getRandomArrayElement, getRandomNumber} from './utils.js';
 
 const DESCRIPTIONS = [
   'Sunset on the beach',
@@ -36,7 +36,7 @@ const createComment = () => ({
   name: getRandomArrayElement(NAMES),
 });
 
-const createDescription = () => ({
+const createPhoto = () => ({
   id: getId(),
   url: `photos/${getPhotoId()}.jpg`,
   description: getRandomArrayElement(DESCRIPTIONS),
@@ -44,6 +44,6 @@ const createDescription = () => ({
   comments: Array.from({length: 6}, createComment),
 });
 
-const photoDescriptions = () => Array.from({length: OBJECT_COUNT}, createDescription);
+const createPhotos = () => Array.from({length: OBJECT_COUNT}, createPhoto);
 
-export {photoDescriptions};
+export {createPhotos};

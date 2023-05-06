@@ -1,5 +1,2 @@
-import {photoDescriptions} from './data.js';
-
-console.log(
-  photoDescriptions()
-);
+import {createPhotos} from './data.js';
+import {photosContainer} from './miniature.js';
