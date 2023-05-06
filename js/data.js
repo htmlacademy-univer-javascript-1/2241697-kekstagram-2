@@ -1,4 +1,4 @@
-import {getId, getCommentId, getPhotoId, getRandomArrayElement, getRandomNumber} from './utils';
+import {getId, getCommentId, getPhotoId, getRandomArrayElement, getRandomNumber} from './utils.js';
 
 const DESCRIPTIONS = [
   'Sunset on the beach',
