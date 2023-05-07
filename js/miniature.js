@@ -1,23 +1,40 @@
-import {createPhotos} from './data.js';
+import {openBigPhoto} from './big-photo.js';
 
 const photosContainer = document.querySelector('.pictures');
-const miniatureTemplate = document.querySelector('#picture')
+const photoTemplate = document.querySelector('#picture')
   .content
   .querySelector('.picture');
+const photoContainerFragment = document.createDocumentFragment();
 
-const userPhotos = createPhotos();
+let photos = [];
 
-const photosContainerFragment = document.createDocumentFragment();
+const showPhoto = (pictures) => {
+  photos = pictures;
+  pictures.forEach(({url, comments, likes}, index) => {
+    const miniatureElement = photoTemplate.cloneNode(true);
+    miniatureElement.querySelector('.picture__img').setAttribute('photo-index', index);
+    miniatureElement.querySelector('.picture__img').src = url;
+    miniatureElement.querySelector('.picture__likes').textContent = likes;
+    miniatureElement.querySelector('.picture__comments').textContent = comments.length;
+    photoContainerFragment.appendChild(miniatureElement);
+  });
 
-userPhotos.forEach(({url, description, likes, comments}) => {
-  const miniatureElement = miniatureTemplate.cloneNode(true);
-  miniatureElement.querySelector('.picture__img').src = url;
-  miniatureElement.querySelector('.picture__info').textContent = description;
-  miniatureElement.querySelector('.picture__likes').textContent = likes;
-  miniatureElement.querySelector('.picture__comments').textContent = comments;
-  photosContainerFragment.appendChild(miniatureElement);
-});
+  photosContainer.appendChild(photoContainerFragment);
+};
 
-photosContainer.appendChild(photosContainerFragment);
+const hidePhotos = () => {
+  photosContainer.querySelectorAll('.picture').forEach((miniatureElement) => {
+    miniatureElement.remove();
+  });
+};
 
-export{photosContainer};
+const photoClick = function (evt) {
+  if (evt.target.nodeName === 'IMG') {
+    evt.preventDefault();
+    openBigPhoto(photos[evt.target.getAttribute('photo-index')]);
+  }
+};
+
+photosContainer.addEventListener('click', photoClick);
+
+export {showPhoto, hidePhotos};
