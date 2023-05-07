@@ -1,4 +1,4 @@
-import {getId, getCommentId, getPhotoId, getRandomArrayElement, getRandomNumber} from './utils.js';
+import {getId, getCommentId, getPhotoId, getRandomArrayElement, getRandomNumber} from './mocks.js';
 
 const DESCRIPTIONS = [
   'Sunset on the beach',
@@ -41,7 +41,7 @@ const createPhoto = () => ({
   url: `photos/${getPhotoId()}.jpg`,
   description: getRandomArrayElement(DESCRIPTIONS),
   likes: getRandomNumber(15, 200),
-  comments: Array.from({length: 6}, createComment),
+  comments: Array.from({length: getRandomNumber(0, 20)}, createComment),
 });
 
 const createPhotos = () => Array.from({length: OBJECT_COUNT}, createPhoto);
