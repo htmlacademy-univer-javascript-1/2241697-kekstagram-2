@@ -1,5 +1,7 @@
 import {isEscapeKey} from './utils.js';
 import {errorMessage, hashtagsHandler, commentHandler} from './errors.js';
+import {onScaleButtonClick} from './photo-scale.js';
+import {applyEffects, onFilterButtonChange} from './photo-effects.js';
 
 const body = document.querySelector('body');
 const form = document.querySelector('.img-upload__form');
@@ -9,6 +11,10 @@ const submitButton = document.querySelector('.img-upload__submit');
 const closeButton = form.querySelector('.img-upload__cancel');
 const hashtagsField = form.querySelector('.text__hashtags');
 const commentsField = form.querySelector('.text__description');
+const scaleContainer = document.querySelector('.img-upload__scale');
+const photoPreview = document.querySelector('.img-upload__preview').querySelector('img');
+const onEffectListChange = document.querySelector('.effects__list');
+const sliderWrapper = document.querySelector('.effect-level');
 
 const error = () => errorMessage;
 
@@ -21,20 +27,24 @@ const pristine = new Pristine(form, {
 const closeUploadPopup  = () => {
   editImg.classList.add('hidden');
   body.classList.remove('modal-open');
+  document.removeEventListener('keydown', onPopupEscKeydown);
+  closeButton.removeEventListener('click', onCloseButtonClick);
+  scaleContainer.removeEventListener('click', onScaleButtonClick);
+  onEffectListChange.removeEventListener('change', onFilterButtonChange);
+  photoPreview.removeAttribute('class');
+  photoPreview.removeAttribute('style');
   form.reset();
 };
 
-const onPopupEscKeydown = (evt) => {
+function onPopupEscKeydown (evt) {
   if (isEscapeKey(evt)) {
     closeUploadPopup();
-    document.removeEventListener('keydown', onPopupEscKeydown);
   }
-};
+}
 
-const onCloseButtonClick = () => {
+function onCloseButtonClick () {
   closeUploadPopup();
-  document.removeEventListener('keydown', onPopupEscKeydown);
-};
+}
 
 const addFieldListeners = (field) => {
   field.addEventListener('focus', () => {
@@ -50,11 +60,16 @@ const publishButton = () => {
   submitButton.disabled = !pristine.validate();
 };
 
+const checkForHidden = () => photoPreview.hasAttribute('class') ? sliderWrapper.classList.remove('hidden') : sliderWrapper.classList.add('hidden');
+
 const onImgUploadFieldchange = () => {
   editImg.classList.remove('hidden');
   body.classList.add('modal-open');
   closeButton.addEventListener('click', onCloseButtonClick);
-  document.addEventListener('keydown',onPopupEscKeydown);
+  document.addEventListener('keydown', onPopupEscKeydown);
+  checkForHidden();
+  scaleContainer.addEventListener('click', onScaleButtonClick);
+  onEffectListChange.addEventListener('change', onFilterButtonChange);
   addFieldListeners(commentsField);
   addFieldListeners(hashtagsField);
   publishButton();
@@ -73,6 +88,7 @@ const renderUploadForm = () => {
   imgUploadField.addEventListener('change', onImgUploadFieldchange);
   hashtagsField.addEventListener('input', onHashtagInput);
   commentsField.addEventListener('input', onCommentInput);
+  applyEffects();
   validateForm();
 };
 
