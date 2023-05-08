@@ -18,7 +18,6 @@ const showPhoto = (pictures) => {
     miniatureElement.querySelector('.picture__comments').textContent = comments.length;
     photoContainerFragment.appendChild(miniatureElement);
   });
-
   photosContainer.appendChild(photoContainerFragment);
 };
 
@@ -28,13 +27,13 @@ const hidePhotos = () => {
   });
 };
 
-const photoClick = function (evt) {
+const onPhotoClick = function (evt) {
   if (evt.target.nodeName === 'IMG') {
     evt.preventDefault();
     openBigPhoto(photos[evt.target.getAttribute('photo-index')]);
   }
 };
 
-photosContainer.addEventListener('click', photoClick);
+photosContainer.addEventListener('click', onPhotoClick);
 
 export {showPhoto, hidePhotos};
