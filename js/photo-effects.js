@@ -2,6 +2,7 @@ const photoPreview = document.querySelector('.img-upload__preview').querySelecto
 const slider = document.querySelector('.effect-level__slider');
 const sliderWrapper = document.querySelector('.effect-level');
 const effectValue = document.querySelector('.effect-level__value');
+const effectList = document.querySelector('.effects__list');
 
 const Effect = {
   none: {
@@ -78,7 +79,26 @@ const Effect = {
   }
 };
 
-const applyEffects = () => {
+const onEffectListChange = (evt) => {
+  const evtHandler = evt.target.value;
+
+  if (evtHandler === Effect.none.filter) {
+    sliderWrapper.classList.add('hidden');
+    photoPreview.style.filter = Effect[evtHandler].filter;
+    photoPreview.removeAttribute('class');
+  } else {
+    sliderWrapper.classList.remove('hidden');
+    photoPreview.removeAttribute('class');
+    photoPreview.classList.add(`effects__preview--${evtHandler}`);
+    slider.noUiSlider.updateOptions(Effect[evtHandler].options);
+    slider.noUiSlider.on('update', () => {
+      effectValue.value = slider.noUiSlider.get();
+      photoPreview.style.filter = `${Effect[evtHandler].filter}(${effectValue.value}${Effect[evtHandler].units})`;
+    });
+  }
+};
+
+const createSlider = () => {
   noUiSlider.create(slider, {
     range: {
       min: 0,
@@ -99,23 +119,12 @@ const applyEffects = () => {
   });
 };
 
-const onFilterButtonChange = (evt) => {
-  const evtHandler = evt.target.value;
-
-  if (evtHandler === 'none') {
-    sliderWrapper.classList.add('hidden');
-    photoPreview.style.filter = Effect[evtHandler].filter;
-    photoPreview.removeAttribute('class');
-  } else {
-    sliderWrapper.classList.remove('hidden');
-    photoPreview.removeAttribute('class');
-    photoPreview.classList.add(`effects__preview--${evtHandler}`);
-    slider.noUiSlider.updateOptions(Effect[evtHandler].options);
-    slider.noUiSlider.on('update', () => {
-      effectValue.value = slider.noUiSlider.get();
-      photoPreview.style.filter = `${Effect[evtHandler].filter}(${effectValue.value}${Effect[evtHandler].units})`;
-    });
-  }
+const applyEffects = () => {
+  effectList.addEventListener('change', onEffectListChange);
 };
 
-export {applyEffects, onFilterButtonChange};
+const removeEffects = () => {
+  effectList.removeEventListener('change', onEffectListChange);
+};
+
+export {createSlider, applyEffects, removeEffects};
