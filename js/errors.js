@@ -1,4 +1,4 @@
-import {checkStringLength} from './utils.js';
+import {isEscapeKey, checkStringLength} from './utils.js';
 
 const HASHTAG_MAX_LENGTH = 20;
 const HASHTAG_MAX_NUMBER = 5;
@@ -105,4 +105,33 @@ const commentHandler = (string) => {
   return !isInvalid;
 };
 
-export {errorMessage, hashtagsHandler, commentHandler};
+const errorTemplate = document.querySelector('#error')
+  .content
+  .querySelector('.error');
+
+const closeError = () => {
+  document.querySelector('.error').remove();
+};
+
+const indicateError = (errorText) => {
+  const errorFragment = document.createDocumentFragment();
+  const errorElement = errorTemplate.cloneNode(true);
+  errorElement.querySelector('.error__title').textContent = errorText;
+
+  errorElement.querySelector('.error__button').addEventListener('click', (evt) => {
+    evt.preventDefault();
+    closeError();
+  }, {once: true});
+
+  document.addEventListener('keydown', (evt) => {
+    if (isEscapeKey(evt)) {
+      evt.preventDefault();
+      closeError();
+    }
+  }, {once: true});
+
+  errorFragment.appendChild(errorElement);
+  document.body.appendChild(errorFragment);
+};
+
+export {errorMessage, hashtagsHandler, commentHandler, indicateError, closeError};
