@@ -1,4 +1,5 @@
 const scaleValue = document.querySelector('.scale__control--value');
+const scaleContainer = document.querySelector('.img-upload__scale');
 const photoPreview = document.querySelector('.img-upload__preview').querySelector('img');
 
 const PercentageScale = {
@@ -27,4 +28,12 @@ const onScaleButtonClick = (evt) => {
   photoPreview.style.transform = `scale(${scale/100})`;
 };
 
-export {onScaleButtonClick};
+const createScaleContainer = () => {
+  scaleContainer.addEventListener('click', onScaleButtonClick);
+};
+
+const removeScaleContainer = () => {
+  scaleContainer.removeEventListener('click', onScaleButtonClick);
+};
+
+export {createScaleContainer, removeScaleContainer};
