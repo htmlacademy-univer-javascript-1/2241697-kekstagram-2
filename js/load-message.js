@@ -10,7 +10,7 @@ const errorMessageTemplate = `<section class="error js-message">
 const successMessageTemplate = `<section class="success js-message">
 <div class="success__inner">
   <h2 class="success__title js-message-inner">Изображение успешно загружено</h2>
-  <button type="button" class="success__button js-message-btn">Отлично!</button>
+  <button type="button" class="success__button js-message-btn">Круто!</button>
 </div>
 </section>`;
 

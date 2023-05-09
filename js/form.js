@@ -3,7 +3,7 @@ import {errorMessage, hashtagsHandler, commentHandler} from './errors.js';
 import {onScaleButtonClick} from './photo-scale.js';
 import {applyEffects, onFilterButtonChange} from './photo-effects.js';
 import {outputData} from './api.js';
-import { renderMessage } from './load-message.js';
+import {renderMessage} from './load-message.js';
 
 const body = document.querySelector('body');
 const form = document.querySelector('.img-upload__form');

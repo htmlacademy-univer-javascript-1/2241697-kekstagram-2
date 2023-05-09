@@ -1,11 +1,10 @@
 import {indicateError} from './errors.js';
-import {showPhoto} from './miniature.js';
 import {renderUploadForm} from './form.js';
-/*import {applyEffects} from './photo-effects.js';*/
 import {inputData} from './api.js';
+import {showFilters} from './filter.js';
 
 
-inputData((photos) => showPhoto(photos),
+inputData((photos) => showFilters(photos),
   () => indicateError);
 
 renderUploadForm();
