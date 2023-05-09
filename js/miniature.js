@@ -21,7 +21,7 @@ const showPhoto = (pictures) => {
   photosContainer.appendChild(photoContainerFragment);
 };
 
-const hidePhotos = () => {
+const hidePhoto = () => {
   photosContainer.querySelectorAll('.picture').forEach((miniatureElement) => {
     miniatureElement.remove();
   });
@@ -36,4 +36,4 @@ const onPhotoClick = function (evt) {
 
 photosContainer.addEventListener('click', onPhotoClick);
 
-export {showPhoto, hidePhotos};
+export {showPhoto, hidePhoto};

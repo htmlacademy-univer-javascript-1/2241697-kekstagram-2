@@ -73,8 +73,10 @@ const openBigPhoto = (photo) => {
   bigPhoto.querySelector('img').setAttribute('alt', 'Фото пользователя');
   bigPhoto.querySelector('.social__caption').textContent =  photo.description;
   bigPhoto.querySelector('.likes-count').textContent = photo.likes;
+
   document.body.classList.add('modal-open');
   bigPhoto.classList.remove('hidden');
+
   closeButton.addEventListener('click', onCloseButtonClick);
   document.addEventListener('keydown', onBigPhotoEscKeydown);
   loadComments(photo);
@@ -83,10 +85,12 @@ const openBigPhoto = (photo) => {
 function closeBigPhoto () {
   document.body.classList.remove('modal-open');
   bigPhoto.classList.add('hidden');
+  commentsLoadButton.classList.remove('hidden');
+
   closeButton.removeEventListener('click', onCloseButtonClick);
   document.removeEventListener('keydown', onBigPhotoEscKeydown);
-  commentsLoadButton.classList.remove('hidden');
   commentsLoadButton.removeEventListener('click', onLoadButtonClick);
+
   numberOfComments = DEFAULT_RENDERED_COMMENTS;
 }
 
